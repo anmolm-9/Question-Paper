@@ -46,6 +46,19 @@
     margin-top: 10px;
     border-radius: 20px;
     display: inline-block;
-    background-color: lightgreen;
+    background-color: rgb(140, 226, 140);
     padding: 5px 10px;
 }
+.main-header>.home{
+    border-left: 4px solid blue;
+    padding: 10px;
+    margin: 10px;
+    box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+    border-radius: 10px;
+    align-items: center;
+}
+
+
+   
+
+     
