@@ -1,31 +1,103 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Document</title>
-    <link rel="stylesheet" href="css/style.css" />
-  </head>
-  <body>
-    <div class="main-header">
-      <h3>Question Papers | Mumbai University</h3>
-      <p>
-        Browse and download past examation paper for Mumbai University corses.
-        <span>&#8592; All Question Papers</span>
-      </p>
-      <span class="files">37 Files</span> 
-      <span class="paper">Question Papers</span>
-    </div>
-    <div class="main-header">
-      <span class="Home"   > Home   >   Question Papers </span>
-</div>
-    <div class="main-header">
-      <span class="search directory"> 
-        
-        <input type="text" id="searchInput" onkeyup="searchFunction()" placeholder="Search in this directory...">
-</span>
-    </div>
-    
 
-  </body>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Bootstrap demo</title>
+  <link rel="stylesheet" href="css/style.css">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-LN+7fdVzj6u52u30Kp6M/trliBMCMKTyK833zpbD+pXdCLuTusPj697FH4R/5mcr" crossorigin="anonymous">
+</head>
+
+<body>
+  <div class="main-header">
+    <h3>Question Papers | Mumbai University</h3>
+    <p>
+      Browse and download past examination paper for Mumbai University courses.
+      <span>&#8592; All Question Papers</span>
+    </p>
+    <span class="files">12 Files</span>
+    <span class="paper">Question Papers</span>
+  </div>
+
+  <div class="direction">
+    <span class="home"> Home </span>
+    <span>></span>
+    <span class="highlight">Question Paper</span>
+  </div>
+
+  <div class="direction">
+    <span class="search directory">
+      <i class="bi bi-search"></i>
+      <input type="text" id="searchInput" onkeyup="searchFunction()" placeholder="Search in this directory...">
+    </span>
+  </div>
+
+
+  <div class="c-heading">
+    <h2 class="highlight">Folders</h2>
+  </div>
+
+
+  <div class="couser-container">
+    <div class="couser"><img width="48" height="48" src="https://img.icons8.com/fluency/48/document.png"
+        alt="BA folder" /><a class="course-link"target="_blank" href="../courses/BA.html">BA</a></div>
+
+    <div class="couser"><img width="48" height="48" src="https://img.icons8.com/fluency/48/document.png"
+        alt="BSc CS folder" /><a class="course-link"target="_blank" href="../courses/BSC-CS.html">BSc Cs</a></div>
+
+    <div class="couser"><img width="48" height="48" src="https://img.icons8.com/fluency/48/document.png"
+        alt="BSc IT folder" /><a class="course-link"target="_blank" href="../courses/BSc-IT.html">BSc IT</a></div>
+
+    <div class="couser"><img width="48" height="48" src="https://img.icons8.com/fluency/48/document.png"
+        alt="BCom folder" /><a class="course-link"target="_blank" href="../courses/BCom.html">BCom</a></div>
+
+    <div class="couser"><img width="48" height="48" src="https://img.icons8.com/fluency/48/document.png"
+        alt="BMS folder" /><a class="course-link"target="_blank" href="../courses/BMS.html">BMS</a></div>
+
+    <div class="couser"><img width="48" height="48" src="https://img.icons8.com/fluency/48/document.png"
+        alt="BCom In Banking And Insurance (B&I) folder" /><a class="course-link"
+        href="courses/BCom(Banking&Insurance).html"target="_blank">BCom In Banking And Insurance (BCBI)</a></div>
+
+    <div class="couser"><img width="48" height="48" src="https://img.icons8.com/fluency/48/document.png"
+        alt="BCom In Accounting And Finance (A&F) folder" /><a class="course-link"
+        href="courses/BCom(Accounting&Finance).html"target="_blank">BCom In Accounting And Finance (BCAF)</a></div>
+
+    <div class="couser"><img width="48" height="48" src="https://img.icons8.com/fluency/48/document.png"
+        alt="BCom In Financial Management (FM) folder" /><a class="course-link"
+        href="courses/BCom(Financial Management).html"target="_blank">BCom In Financial Management (FM)</a></div>
+
+
+    <div class="couser"><img width="48" height="48" src="https://img.icons8.com/fluency/48/document.png"
+        alt="BCom In Investment Management(IM) folder" /><a class="course-link"
+        href="courses/BCom(Investment Management).html"target="_blank">BCom In Investment Management(IM) </a></div>
+
+
+    <div class="couser"><img width="48" height="48" src="https://img.icons8.com/fluency/48/document.png"
+        alt="MA HINDI folder" /><a class="course-link"target="_blank" href="courses/MA(Hindi).html"target="_blank">MA HINDI</a></div>
+
+
+    <div class="couser"><img width="48" height="48" src="https://img.icons8.com/fluency/48/document.png"
+        alt="MSc IT folder" /><a class="course-link"target="_blank" href="courses/MSc(Information Technology).html"target="_blank" >MSc IT </a></div>
+
+
+    <div class="couser"><img width="48" height="48" src="https://img.icons8.com/fluency/48/document.png"
+        alt="MCom Advanced Accountancy (AA) folder" /><a class="course-link"
+        href="courses/MCom(Advanced Accountancy).html" target="_blank">MCom Advanced Accountancy (AA)</a></div>
+
+        
+  </div>
+
+
+
+
+
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-ndDqU0Gzau9qJ1lfW4pNLlhNTkCfHzAVBReH9diLvGRem5+R9g2FzA8ZGN954O5Q"
+    crossorigin="anonymous"></script>
+
+</body>
+
 </html>
