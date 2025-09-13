@@ -1,0 +1,519 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PYQ Admin Dashboard</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    /* Google Fonts */
+    @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap');
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: "Poppins", sans-serif;
+    }
+
+    body {
+      display: flex;
+      min-height: 100vh;
+      background-color: #f5f7fa;
+    }
+
+    /* Sidebar */
+    .sidebar {
+      width: 250px;
+      background-color: #1e293b;
+      color: white;
+      display: flex;
+      flex-direction: column;
+      position: fixed;
+      height: 100%;
+      padding: 20px 0;
+      transition: all 0.3s ease;
+      box-shadow: 2px 0 8px rgba(0, 0, 0, 0.15);
+      overflow-y: auto;
+    }
+
+    .sidebar h2 {
+      text-align: center;
+      font-size: 24px;
+      margin-bottom: 30px;
+      font-weight: 600;
+    }
+
+    .sidebar a {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      color: #cbd5e1;
+      text-decoration: none;
+      padding: 14px 20px;
+      margin: 4px 12px;
+      font-size: 15px;
+      border-radius: 8px;
+      transition: all 0.3s ease;
+    }
+
+    .sidebar a:hover,
+    .sidebar a.active {
+      background-color: #3b82f6;
+      color: white;
+    }
+
+    .sidebar a i {
+      font-size: 18px;
+    }
+
+    /* Main Content */
+    .main {
+      margin-left: 250px;
+      padding: 25px;
+      width: calc(100% - 250px);
+    }
+
+    .section {
+      display: none;
+    }
+
+    .section.active {
+      display: block;
+    }
+
+    /* Dashboard Cards */
+    .dashboard {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 20px;
+    }
+
+    .card {
+      background: white;
+      padding: 20px;
+      border-radius: 12px;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    }
+
+    .card h3 {
+      font-size: 20px;
+      color: #334155;
+      margin-bottom: 8px;
+    }
+
+    .card p {
+      font-size: 22px;
+      font-weight: 600;
+      color: #3b82f6;
+    }
+
+    /* Tables */
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 15px;
+      background: white;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+    }
+
+    th, td {
+      border: 1px solid #e5e7eb;
+      padding: 10px;
+      text-align: center;
+    }
+
+    th {
+      background-color: #f1f5f9;
+    }
+
+    /* Upload Section */
+    .upload-box {
+      background: white;
+      padding: 20px;
+      border-radius: 12px;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+      margin-top: 10px;
+    }
+
+    .upload-box input {
+      margin-bottom: 10px;
+      padding: 8px;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+    }
+
+    .upload-box button {
+      padding: 8px 14px;
+      background-color: #3b82f6;
+      color: white;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+    }
+
+    .upload-box button:hover {
+      background-color: #2563eb;
+    }
+
+    /* Responsive Sidebar */
+    @media (max-width: 768px) {
+      .sidebar {
+        width: 70px;
+        padding: 20px 5px;
+      }
+
+      .sidebar h2 {
+        display: none;
+      }
+
+      .sidebar a {
+        justify-content: center;
+        padding: 14px;
+      }
+
+      .sidebar a span {
+        display: none;
+      }
+
+      .main {
+        margin-left: 70px;
+        width: calc(100% - 70px);
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Sidebar -->
+  <div class="sidebar">
+    <h2>PYQ Admin</h2>
+    <a href="#" class="active" onclick="showSection('dashboard')"><i class="fa-solid fa-house"></i> <span>Dashboard</span></a>
+    <a href="#" onclick="showSection('users')"><i class="fa-solid fa-users"></i> <span>User Management</span></a>
+    <a href="#" onclick="showSection('admin-management')"><i class="fa-solid fa-user-shield"></i> <span>Admin Management</span></a>
+    <a href="#" onclick="showSection('pyqs')"><i class="fa-solid fa-file-pdf"></i> <span>PYQ Management</span></a>
+    <a href="#" onclick="showSection('premium')"><i class="fa-solid fa-crown"></i> <span>Premium Plans</span></a>
+    <a href="#" onclick="showSection('content')"><i class="fa-solid fa-check-circle"></i> <span>Content Moderation</span></a>
+    <a href="#" onclick="showSection('feedback')"><i class="fa-solid fa-comments"></i> <span>Feedback</span></a>
+    <a href="#" onclick="showSection('security')"><i class="fa-solid fa-shield"></i> <span>Security</span></a>
+    <a href="#" onclick="showSection('reports')"><i class="fa-solid fa-chart-line"></i> <span>Reports</span></a>
+    <div style="margin-top: auto; padding: 20px 0;">
+      <a href="#" onclick="logout()" style="color: #ef4444; border-top: 1px solid #374151; padding-top: 20px;"><i class="fa-solid fa-sign-out-alt"></i> <span>Logout</span></a>
+    </div>
+  </div>
+
+  <!-- Main Content -->
+  <div class="main">
+
+    <!-- Dashboard Section -->
+    <div id="dashboard" class="section active">
+      <h1>Dashboard</h1>
+      <div class="dashboard">
+        <div class="card"><h3>Total Users</h3><p>1,200</p></div>
+        <div class="card"><h3>Premium Users</h3><p>300</p></div>
+        <div class="card"><h3>Total PYQs</h3><p>250</p></div>
+        <div class="card"><h3>Revenue</h3><p>₹15,000</p></div>
+      </div>
+    </div>
+
+    <!-- User Management -->
+    <div id="users" class="section">
+      <h1>User Management</h1>
+      <table>
+        <tr>
+          <th>User ID</th>
+          <th>Name</th>
+          <th>Email</th>
+          <th>Premium</th>
+          <th>Action</th>
+        </tr>
+        <tr>
+          <td>101</td>
+          <td>Rahul Sharma</td>
+          <td>rahul@gmail.com</td>
+          <td>Yes</td>
+          <td><button>Delete</button></td>
+        </tr>
+        <tr>
+          <td>102</td>
+          <td>Priya Singh</td>
+          <td>priya@gmail.com</td>
+          <td>No</td>
+          <td><button>Delete</button></td>
+        </tr>
+      </table>
+    </div>
+
+    <!-- Admin Management -->
+    <div id="admin-management" class="section">
+      <h1>Admin Management</h1>
+      <div class="upload-box">
+        <h3>Create New Admin User</h3>
+        <form id="createAdminForm">
+          <input type="text" id="adminFirstName" placeholder="First Name" required style="width: 48%; margin-right: 4%;">
+          <input type="text" id="adminLastName" placeholder="Last Name" required style="width: 48%;">
+          <input type="email" id="adminEmail" placeholder="Email Address" required style="width: 100%; margin-top: 10px;">
+          <input type="password" id="adminPassword" placeholder="Password (min 6 chars)" required style="width: 100%; margin-top: 10px;">
+          <button type="submit" style="background: #3b82f6; color: white; padding: 10px 20px; border: none; border-radius: 6px; margin-top: 10px;">Create Admin</button>
+        </form>
+      </div>
+      
+      <div class="upload-box" style="margin-top: 20px;">
+        <h3>Promote User to Admin</h3>
+        <form id="promoteUserForm">
+          <input type="email" id="promoteUserEmail" placeholder="User Email to Promote" required style="width: 70%; margin-right: 4%;">
+          <button type="submit" style="background: #10b981; color: white; padding: 10px 20px; border: none; border-radius: 6px;">Promote to Admin</button>
+        </form>
+      </div>
+    </div>
+
+    <!-- PYQ Management -->
+    <div id="pyqs" class="section">
+      <h1>PYQ Management</h1>
+      <div class="upload-box">
+        <h3>Upload PYQ PDF</h3>
+        <input type="file" accept=".pdf">
+        <button>Upload</button>
+      </div>
+      <table>
+        <tr>
+          <th>PYQ ID</th>
+          <th>Title</th>
+          <th>Year</th>
+          <th>Action</th>
+        </tr>
+        <tr>
+          <td>1</td>
+          <td>BSC CS Sem 5</td>
+          <td>2023</td>
+          <td><button>Delete</button></td>
+        </tr>
+        <tr>
+          <td>2</td>
+          <td>BSC CS Sem 6</td>
+          <td>2022</td>
+          <td><button>Delete</button></td>
+        </tr>
+      </table>
+    </div>
+
+    <!-- Premium Plans -->
+    <div id="premium" class="section">
+      <h1>Premium Plans</h1>
+      <div class="dashboard">
+        <div class="card"><h3>Monthly Plan</h3><p>₹99</p></div>
+        <div class="card"><h3>Quarterly Plan</h3><p>₹249</p></div>
+        <div class="card"><h3>Yearly Plan</h3><p>₹799</p></div>
+      </div>
+    </div>
+
+    <!-- Content Moderation -->
+    <div id="content" class="section">
+      <h1>Content Moderation</h1>
+      <p>Approve or reject PYQ uploads and manage inappropriate content here.</p>
+    </div>
+
+    <!-- Feedback -->
+    <div id="feedback" class="section">
+      <h1>Feedback & Support</h1>
+      <p>Read and respond to user feedback here.</p>
+    </div>
+
+    <!-- Security -->
+    <div id="security" class="section">
+      <h1>Security & Logs</h1>
+      <p>Manage admin logins and monitor suspicious activity.</p>
+    </div>
+
+    <!-- Reports -->
+    <div id="reports" class="section">
+      <h1>Analytics & Reports</h1>
+      <p>Track performance, user activity, and revenue insights.</p>
+    </div>
+
+  </div>
+
+  <script>
+    // Check if user is authenticated and has admin role
+    document.addEventListener('DOMContentLoaded', function() {
+      const token = localStorage.getItem('authToken');
+      const userData = localStorage.getItem('userData');
+      
+      if (!token || !userData) {
+        alert('Access denied. Please login first.');
+        window.location.href = '/login';
+        return;
+      }
+      
+      const user = JSON.parse(userData);
+      if (user.role !== 'admin') {
+        alert('Access denied. Admin privileges required.');
+        window.location.href = '/';
+        return;
+      }
+      
+      // Load admin dashboard data
+      loadDashboardData();
+      
+      // Setup form handlers
+      setupAdminForms();
+    });
+
+    // Setup admin form handlers
+    function setupAdminForms() {
+      // Create Admin Form
+      document.getElementById('createAdminForm').addEventListener('submit', async (e) => {
+        e.preventDefault();
+        
+        const formData = {
+          firstName: document.getElementById('adminFirstName').value.trim(),
+          lastName: document.getElementById('adminLastName').value.trim(),
+          email: document.getElementById('adminEmail').value.trim(),
+          password: document.getElementById('adminPassword').value
+        };
+        
+        if (formData.firstName.length < 2 || formData.lastName.length < 2) {
+          alert('First and last name must be at least 2 characters');
+          return;
+        }
+        
+        if (formData.password.length < 6) {
+          alert('Password must be at least 6 characters');
+          return;
+        }
+        
+        try {
+          const response = await makeAuthenticatedRequest('/api/admin/create-admin', {
+            method: 'POST',
+            body: JSON.stringify(formData)
+          });
+          
+          if (response) {
+            const result = await response.json();
+            if (result.success) {
+              alert('Admin user created successfully!');
+              document.getElementById('createAdminForm').reset();
+            } else {
+              alert(result.message || 'Failed to create admin user');
+            }
+          }
+        } catch (error) {
+          console.error('Error creating admin:', error);
+          alert('Error creating admin user');
+        }
+      });
+      
+      // Promote User Form
+      document.getElementById('promoteUserForm').addEventListener('submit', async (e) => {
+        e.preventDefault();
+        
+        const email = document.getElementById('promoteUserEmail').value.trim();
+        if (!email) {
+          alert('Please enter a user email');
+          return;
+        }
+        
+        const confirmed = confirm(`Are you sure you want to promote ${email} to admin?`);
+        if (!confirmed) return;
+        
+        try {
+          const response = await makeAuthenticatedRequest('/api/admin/promote-user', {
+            method: 'PUT',
+            body: JSON.stringify({ email: email })
+          });
+          
+          if (response) {
+            const result = await response.json();
+            if (result.success) {
+              alert(result.message || 'User promoted to admin successfully!');
+              document.getElementById('promoteUserForm').reset();
+            } else {
+              alert(result.message || 'Failed to promote user');
+            }
+          }
+        } catch (error) {
+          console.error('Error promoting user:', error);
+          alert('Error promoting user');
+        }
+      });
+    }
+
+    // Function to make authenticated API calls
+    async function makeAuthenticatedRequest(url, options = {}) {
+      const token = localStorage.getItem('authToken');
+      const defaultOptions = {
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}`
+        }
+      };
+      
+      const mergedOptions = {
+        ...defaultOptions,
+        ...options,
+        headers: {
+          ...defaultOptions.headers,
+          ...(options.headers || {})
+        }
+      };
+      
+      const response = await fetch(url, mergedOptions);
+      
+      if (response.status === 401 || response.status === 403) {
+        alert('Session expired or access denied. Please login again.');
+        localStorage.removeItem('authToken');
+        localStorage.removeItem('userData');
+        window.location.href = '/login';
+        return null;
+      }
+      
+      return response;
+    }
+
+    // Load dashboard data from backend
+    async function loadDashboardData() {
+      try {
+        const response = await makeAuthenticatedRequest('/api/admin/dashboard');
+        if (response) {
+          const result = await response.json();
+          if (result.success) {
+            updateDashboardStats(result.data.stats);
+          }
+        }
+      } catch (error) {
+        console.error('Error loading dashboard data:', error);
+      }
+    }
+
+    // Update dashboard with stats
+    function updateDashboardStats(stats) {
+      // You can add elements to display these stats
+      console.log('Dashboard stats:', stats);
+    }
+
+    // Logout function
+    function logout() {
+      localStorage.removeItem('authToken');
+      localStorage.removeItem('userData');
+      window.location.href = '/login';
+    }
+
+    function showSection(sectionId) {
+      // Hide all sections
+      document.querySelectorAll(".section").forEach(sec => sec.classList.remove("active"));
+      // Show clicked section
+      document.getElementById(sectionId).classList.add("active");
+      // Update active link
+      document.querySelectorAll(".sidebar a").forEach(link => link.classList.remove("active"));
+      event.target.closest("a").classList.add("active");
+    }
+  </script>
+
+</body>
+</html>

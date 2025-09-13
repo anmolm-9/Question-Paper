@@ -1,0 +1,662 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Register - Question Papers</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+      position: relative;
+    }
+
+    .register-container {
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(10px);
+      border-radius: 24px;
+      box-shadow: 0 25px 50px rgba(0, 0, 0, 0.15);
+      width: 100%;
+      max-width: 480px;
+      padding: 40px;
+      position: relative;
+      overflow: hidden;
+      animation: slideUp 0.6s ease-out;
+    }
+
+    @keyframes slideUp {
+      from { 
+        opacity: 0; 
+        transform: translateY(30px); 
+      }
+      to { 
+        opacity: 1; 
+        transform: translateY(0); 
+      }
+    }
+
+    .register-container::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 5px;
+      background: linear-gradient(90deg, #667eea, #764ba2, #667eea);
+      background-size: 200% 100%;
+      animation: shimmer 2s infinite;
+    }
+
+    @keyframes shimmer {
+      0% { background-position: -200% 0; }
+      100% { background-position: 200% 0; }
+    }
+
+    .logo {
+      text-align: center;
+      margin-bottom: 32px;
+    }
+
+    .logo h1 {
+      color: #2d3748;
+      font-size: 32px;
+      font-weight: 700;
+      margin-bottom: 8px;
+      background: linear-gradient(135deg, #667eea, #764ba2);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .logo p {
+      color: #718096;
+      font-size: 15px;
+      font-weight: 500;
+    }
+
+    .form-row {
+      display: flex;
+      gap: 16px;
+      margin-bottom: 24px;
+    }
+
+    .form-group {
+      margin-bottom: 24px;
+      position: relative;
+      flex: 1;
+    }
+
+    .form-group.full-width {
+      flex: none;
+      width: 100%;
+    }
+
+    .form-group label {
+      display: block;
+      color: #4a5568;
+      font-size: 14px;
+      font-weight: 600;
+      margin-bottom: 8px;
+    }
+
+    .input-wrapper {
+      position: relative;
+    }
+
+    .input-wrapper i {
+      position: absolute;
+      left: 16px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: #a0aec0;
+      font-size: 16px;
+      transition: color 0.3s ease;
+    }
+
+    .form-group input,
+    .form-group select {
+      width: 100%;
+      padding: 18px 16px 18px 48px;
+      border: 2px solid #e2e8f0;
+      border-radius: 16px;
+      font-size: 16px;
+      transition: all 0.3s ease;
+      background: #f8fafc;
+      font-weight: 500;
+    }
+
+    .form-group input:focus,
+    .form-group select:focus {
+      outline: none;
+      border-color: #667eea;
+      background: white;
+      box-shadow: 0 0 0 4px rgba(102, 126, 234, 0.1);
+      transform: translateY(-2px);
+    }
+
+    .form-group input:focus + i,
+    .form-group input:not(:placeholder-shown) + i {
+      color: #667eea;
+    }
+
+    .form-group input::placeholder {
+      color: #a0aec0;
+      font-weight: 400;
+    }
+
+    .password-strength {
+      margin-top: 12px;
+      font-size: 13px;
+      color: #718096;
+      font-weight: 500;
+    }
+
+    .strength-bar {
+      height: 6px;
+      background: #e2e8f0;
+      border-radius: 3px;
+      margin-top: 6px;
+      overflow: hidden;
+    }
+
+    .strength-fill {
+      height: 100%;
+      transition: all 0.4s ease;
+      border-radius: 3px;
+    }
+
+    .strength-weak { background: linear-gradient(90deg, #f56565, #fc8181); width: 25%; }
+    .strength-fair { background: linear-gradient(90deg, #ed8936, #f6ad55); width: 50%; }
+    .strength-good { background: linear-gradient(90deg, #4299e1, #63b3ed); width: 75%; }
+    .strength-strong { background: linear-gradient(90deg, #48bb78, #68d391); width: 100%; }
+
+    .terms {
+      margin-bottom: 28px;
+      font-size: 14px;
+      color: #4a5568;
+      line-height: 1.6;
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+    }
+
+    .terms input[type="checkbox"] {
+      margin-top: 2px;
+      transform: scale(1.2);
+      accent-color: #667eea;
+    }
+
+    .terms a {
+      color: #667eea;
+      text-decoration: none;
+      font-weight: 600;
+      position: relative;
+    }
+
+    .terms a::after {
+      content: '';
+      position: absolute;
+      width: 0;
+      height: 2px;
+      bottom: -2px;
+      left: 0;
+      background: #667eea;
+      transition: width 0.3s ease;
+    }
+
+    .terms a:hover::after {
+      width: 100%;
+    }
+
+    .register-btn {
+      width: 100%;
+      padding: 18px;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: white;
+      border: none;
+      border-radius: 16px;
+      font-size: 16px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      margin-bottom: 28px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .register-btn::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+      transition: left 0.5s ease;
+    }
+
+    .register-btn:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 15px 35px rgba(102, 126, 234, 0.4);
+    }
+
+    .register-btn:hover::before {
+      left: 100%;
+    }
+
+    .register-btn:active {
+      transform: translateY(-1px);
+    }
+
+    .register-btn:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+      transform: none;
+    }
+
+    .loading-spinner {
+      display: none;
+      width: 20px;
+      height: 20px;
+      border: 2px solid rgba(255,255,255,0.3);
+      border-top: 2px solid white;
+      border-radius: 50%;
+      animation: spin 1s linear infinite;
+      margin-right: 8px;
+    }
+
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+
+    .divider {
+      text-align: center;
+      margin: 28px 0;
+      position: relative;
+      color: #a0aec0;
+      font-size: 14px;
+      font-weight: 500;
+    }
+
+    .divider::before {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: 0;
+      right: 0;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, #e2e8f0, transparent);
+    }
+
+    .divider span {
+      background: rgba(255, 255, 255, 0.95);
+      padding: 0 20px;
+      position: relative;
+    }
+
+    .social-login {
+      display: flex;
+      gap: 16px;
+      margin-bottom: 28px;
+    }
+
+    .social-btn {
+      flex: 1;
+      padding: 14px;
+      border: 2px solid #e2e8f0;
+      border-radius: 16px;
+      background: white;
+      color: #4a5568;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      font-size: 14px;
+      font-weight: 600;
+    }
+
+    .social-btn:hover {
+      border-color: #667eea;
+      color: #667eea;
+      transform: translateY(-2px);
+      box-shadow: 0 8px 25px rgba(102, 126, 234, 0.15);
+    }
+
+    .login-link {
+      text-align: center;
+      color: #4a5568;
+      font-size: 14px;
+      font-weight: 500;
+    }
+
+    .login-link a {
+      color: #667eea;
+      text-decoration: none;
+      font-weight: 700;
+      transition: color 0.3s ease;
+    }
+
+    .login-link a:hover {
+      color: #5a67d8;
+    }
+
+    .notification {
+      position: fixed;
+      top: 30px;
+      right: 30px;
+      padding: 16px 24px;
+      border-radius: 16px;
+      color: white;
+      font-weight: 600;
+      z-index: 1000;
+      transform: translateX(400px);
+      transition: all 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+      box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+      backdrop-filter: blur(10px);
+    }
+
+    .notification.show {
+      transform: translateX(0);
+    }
+
+    .notification-success {
+      background: linear-gradient(135deg, #48bb78, #38a169);
+    }
+
+    .notification-error {
+      background: linear-gradient(135deg, #f56565, #e53e3e);
+    }
+
+    .notification-warning {
+      background: linear-gradient(135deg, #ed8936, #dd6b20);
+    }
+
+    .notification-info {
+      background: linear-gradient(135deg, #4299e1, #3182ce);
+    }
+
+    @media (max-width: 520px) {
+      .register-container {
+        padding: 32px 24px;
+        margin: 15px;
+        border-radius: 20px;
+      }
+      
+      .form-row {
+        flex-direction: column;
+        gap: 0;
+      }
+
+      .social-login {
+        flex-direction: column;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="register-container">
+    <div class="logo">
+      <h1><i class="fas fa-graduation-cap"></i> Question Papers</h1>
+      <p>Create your account to get started</p>
+    </div>
+
+    <form id="registerForm">
+      <div class="form-row">
+        <div class="form-group">
+          <label for="firstName">First Name</label>
+          <div class="input-wrapper">
+            <i class="fas fa-user"></i>
+            <input type="text" id="firstName" name="firstName" placeholder="Enter first name" required>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="lastName">Last Name</label>
+          <div class="input-wrapper">
+            <i class="fas fa-user"></i>
+            <input type="text" id="lastName" name="lastName" placeholder="Enter last name" required>
+          </div>
+        </div>
+      </div>
+
+      <div class="form-group full-width">
+        <label for="email">Email Address</label>
+        <div class="input-wrapper">
+          <i class="fas fa-envelope"></i>
+          <input type="email" id="email" name="email" placeholder="Enter your email" required>
+        </div>
+      </div>
+
+      <div class="form-group full-width">
+        <label for="password">Password</label>
+        <div class="input-wrapper">
+          <i class="fas fa-lock"></i>
+          <input type="password" id="password" name="password" placeholder="Create a strong password" required>
+        </div>
+        <div class="password-strength">
+          <div class="strength-bar">
+            <div class="strength-fill" id="strengthBar"></div>
+          </div>
+          <span id="strengthText">Password strength</span>
+        </div>
+      </div>
+
+      <div class="form-group full-width">
+        <label for="phone">Phone Number (Optional)</label>
+        <div class="input-wrapper">
+          <i class="fas fa-phone"></i>
+          <input type="tel" id="phone" name="phone" placeholder="Enter phone number">
+        </div>
+      </div>
+
+      <div class="terms">
+        <input type="checkbox" id="terms" required>
+        <label for="terms">
+          I agree to the <a href="#" onclick="showTerms()">Terms of Service</a> 
+          and <a href="#" onclick="showPrivacy()">Privacy Policy</a>
+        </label>
+      </div>
+
+      <button type="submit" class="register-btn" id="submitBtn">
+        <div class="loading-spinner" id="loadingSpinner"></div>
+        <i class="fas fa-user-plus" id="submitIcon"></i> Create Account
+      </button>
+    </form>
+
+    <div class="divider">
+      <span>or continue with</span>
+    </div>
+
+    <div class="social-login">
+      <button class="social-btn" onclick="showComingSoon('Google')">
+        <i class="fab fa-google"></i>
+        Google
+      </button>
+      <button class="social-btn" onclick="showComingSoon('Facebook')">
+        <i class="fab fa-facebook-f"></i>
+        Facebook
+      </button>
+    </div>
+
+    <div class="login-link">
+      Already have an account? <a href="login">Sign in here</a>
+    </div>
+  </div>
+
+  <script>
+    // API Configuration
+    //const API_BASE_URL = 'http://127.0.0.1:5000';
+
+    // Notification system
+    function showNotification(message, type = 'info', duration = 5000) {
+      // Remove existing notification
+      const existingNotification = document.querySelector('.notification');
+      if (existingNotification) {
+        existingNotification.remove();
+      }
+
+      const notification = document.createElement('div');
+      notification.className = `notification notification-${type}`;
+      notification.innerHTML = `
+        <i class="fas fa-${type === 'success' ? 'check-circle' : type === 'error' ? 'exclamation-circle' : type === 'warning' ? 'exclamation-triangle' : 'info-circle'}"></i>
+        ${message}
+      `;
+      
+      document.body.appendChild(notification);
+      
+      // Show notification
+      setTimeout(() => notification.classList.add('show'), 100);
+      
+      // Hide notification
+      setTimeout(() => {
+        notification.classList.remove('show');
+        setTimeout(() => notification.remove(), 400);
+      }, duration);
+    }
+
+    // Password strength indicator
+    const passwordInput = document.getElementById('password');
+    const strengthBar = document.getElementById('strengthBar');
+    const strengthText = document.getElementById('strengthText');
+
+    passwordInput.addEventListener('input', function() {
+      const password = this.value;
+      const strength = getPasswordStrength(password);
+      
+      strengthBar.className = 'strength-fill ' + strength.class;
+      strengthText.textContent = strength.text;
+    });
+
+    function getPasswordStrength(password) {
+      if (password.length < 6) {
+        return { class: 'strength-weak', text: 'Too short (min 6 characters)' };
+      }
+      
+      let score = 0;
+      if (password.length >= 8) score++;
+      if (/[a-z]/.test(password)) score++;
+      if (/[A-Z]/.test(password)) score++;
+      if (/[0-9]/.test(password)) score++;
+      if (/[^A-Za-z0-9]/.test(password)) score++;
+
+      if (score < 2) return { class: 'strength-weak', text: 'Weak password' };
+      if (score < 3) return { class: 'strength-fair', text: 'Fair password' };
+      if (score < 4) return { class: 'strength-good', text: 'Good password' };
+      return { class: 'strength-strong', text: 'Strong password' };
+    }
+
+    // Form submission
+    document.getElementById('registerForm').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      
+      const submitBtn = document.getElementById('submitBtn');
+      const loadingSpinner = document.getElementById('loadingSpinner');
+      const submitIcon = document.getElementById('submitIcon');
+      
+      // Get form data
+      const formData = {
+        firstName: document.getElementById('firstName').value.trim(),
+        lastName: document.getElementById('lastName').value.trim(),
+        role: "user", // Always set as user for public registration
+        email: document.getElementById('email').value.trim(),
+        password: document.getElementById('password').value,
+        phone: document.getElementById('phone').value.trim()
+      };
+
+      // Basic validation
+      if (formData.firstName.length < 2) {
+        showNotification('First name must be at least 2 characters', 'error');
+        return;
+      }
+      
+      if (formData.lastName.length < 2) {
+        showNotification('Last name must be at least 2 characters', 'error');
+        return;
+      }
+
+      if (formData.password.length < 6) {
+        showNotification('Password must be at least 6 characters', 'error');
+        return;
+      }
+
+      // Show loading state
+      submitBtn.disabled = true;
+      loadingSpinner.style.display = 'inline-block';
+      submitIcon.style.display = 'none';
+      submitBtn.innerHTML = '<div class="loading-spinner" style="display: inline-block; width: 20px; height: 20px; border: 2px solid rgba(255,255,255,0.3); border-top: 2px solid white; border-radius: 50%; animation: spin 1s linear infinite; margin-right: 8px;"></div>Creating Account...';
+
+      try {
+        const response = await fetch(`/api/auth/register`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(formData)
+        });
+
+        const result = await response.json();
+
+        if (result.success) {
+          showNotification('Account created successfully! Redirecting...', 'success');
+          
+          // Store user data if needed
+          if (result.data && result.data.token) {
+            localStorage.setItem('authToken', result.data.token);
+            localStorage.setItem('userData', JSON.stringify(result.data.user));
+          }
+          
+          // Redirect after success - redirect to login page for all users
+          setTimeout(() => {
+            showNotification('Please login with your new account', 'info');
+            window.location.href = 'login';
+          }, 2000);
+        } else {
+          showNotification(result.message || 'Registration failed', 'error');
+        }
+      } catch (error) {
+        console.error('Registration error:', error);
+        showNotification('Network error. Please check your connection and try again.', 'error');
+      } finally {
+        // Reset button state
+        submitBtn.disabled = false;
+        loadingSpinner.style.display = 'none';
+        submitIcon.style.display = 'inline';
+        submitBtn.innerHTML = '<i class="fas fa-user-plus"></i> Create Account';
+      }
+    });
+
+    // Helper functions
+    function showTerms() {
+      showNotification('Terms of Service will be available soon!', 'info');
+    }
+
+    function showPrivacy() {
+      showNotification('Privacy Policy will be available soon!', 'info');
+    }
+
+    function showComingSoon(platform) {
+      showNotification(`${platform} registration coming soon!`, 'info');
+    }
+  </script>
+</body>
+
+</html>
