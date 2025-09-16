@@ -1,6 +1,8 @@
-# mujhey kaise run karoge?
+# mujhey kaise run aur install karoge?
 
 ```code
+git clone https://github.com/anmolm-9/Question-Paper.git
+cd qp
 cd backend
 python -m venv venv
 .\venv\Scripts\Activate.ps1
